@@ -24,6 +24,7 @@ describe Ipayment do
   end
 
   describe 'Helpers module' do
+
     class MyViewClass
       include Ipayment::Helpers
     end
@@ -34,6 +35,12 @@ describe Ipayment do
       @view.stub!(:concat).and_return('concatinated')
       @view.stub!(:hidden_field_tag).and_return('hidden_field_tag')
       @view.stub!(:form_tag).and_yield(@view).and_return('form_tag')
+      Ipayment::Config.stub!(:get).and_return({
+            'accountId' => 99999,
+            'trxuserId' =>  99999,
+            'trxpassword' => 0,
+            'adminactionpassword' => '5cfgRT34xsdedtFLdfHxj7tfwx24fe'
+          })
     end
 
     it "should generate session id for the ipayment" do
@@ -278,19 +285,6 @@ if ENV['LIVE_TESTS'] == '1'
           :silent_error_url => 'http://sauspiel.local/fail'
         }).should match(/[a-zA-Z0-9]{32}/)
       end
-    end
-  end
-end
-
-module Ipayment
-  class Config
-    def self.get
-      {
-        'accountId' => 99999,
-        'trxuserId' =>  99999,
-        'trxpassword' => 0,
-        'adminactionpassword' => '5cfgRT34xsdedtFLdfHxj7tfwx24fe'
-      }
     end
   end
 end
