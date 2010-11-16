@@ -3,7 +3,12 @@ require 'soap/wsdlDriver'
 module Ipayment
   class Config
     def self.get
-      YAML.load(File.open("#{RAILS_ROOT}/config/ipayment.yml"))
+      config = YAML.load(File.open("#{RAILS_ROOT}/config/ipayment.yml"))
+      if config[RAILS_ENV]
+        return config[RAILS_ENV]
+      else
+        return config
+      end
     end
   end
 

@@ -151,6 +151,26 @@ describe Ipayment do
     end
   end
 
+  describe Config do
+      it "should load the correct config depending on the environment" do
+        YAML.stub!(:load).and_return("development" => {"accountId" => 123}, "production" => {"accountId" => 789})
+        File.stub!(:open)
+        RAILS_ROOT = "dummy"
+        RAILS_ENV = "development"
+        Ipayment::Config.get["accountId"].should == 123
+        RAILS_ENV = "production"
+        Ipayment::Config.get["accountId"].should == 789
+      end
+
+      it "should provide a fallbakc for old configs" do
+        YAML.stub!(:load).and_return({'accountId' => 99999,'trxuserId' =>  99999,'trxpassword' => 0,'adminactionpassword' => '5cfgRT34xsdedtFLdfHxj7tfwx24fe'})
+        File.stub!(:open)
+        RAILS_ROOT = "dummy"
+        RAILS_ENV = "development"
+        Ipayment::Config.get["accountId"].should == 99999
+      end
+  end
+
   describe 'Payment' do
 
     describe 'initialize' do
