@@ -1,4 +1,10 @@
-accountId: 00000000
-trxuserId: 0000
-trxpassword: 0000000
-adminactionpassword: xxxxxxxxxxxxxxxxxxxxxxxxx
+production:
+  accountId: 00000000
+  trxuserId: 0000
+  trxpassword: 0000000
+  adminactionpassword: xxxxxxxxxxxxxxxxxxxxxxxxx
+development:
+  accountId: 99999
+  trxuserId: 99999
+  trxpassword: 0
+  adminactionpassword: 5cfgRT34xsdedtFLdfHxj7tfwx24fe
